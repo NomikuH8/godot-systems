@@ -1,0 +1,93 @@
+[gd_scene load_steps=11 format=3 uid="uid://clp5hy6ukk1tv"]
+
+[ext_resource type="Script" uid="uid://dknypiyjvb6ua" path="res://animation_component.gd" id="1_06t4h"]
+[ext_resource type="Texture2D" uid="uid://drkayjtgfopxj" path="res://sprites/start_game_button.png" id="1_fu7sn"]
+[ext_resource type="Texture2D" uid="uid://c1hn1euqb44bn" path="res://sprites/options_button.png" id="3_jix8l"]
+[ext_resource type="Texture2D" uid="uid://ca8qwf5uap42h" path="res://sprites/exit_button.png" id="4_jix8l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_glbon"]
+atlas = ExtResource("1_fu7sn")
+region = Rect2(0, 0, 256, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nlkkf"]
+atlas = ExtResource("1_fu7sn")
+region = Rect2(256, 0, 256, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qe12f"]
+atlas = ExtResource("3_jix8l")
+region = Rect2(0, 0, 256, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qtwp"]
+atlas = ExtResource("3_jix8l")
+region = Rect2(256, 0, 256, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dy7ct"]
+atlas = ExtResource("4_jix8l")
+region = Rect2(0, 0, 256, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0o4t1"]
+atlas = ExtResource("4_jix8l")
+region = Rect2(256, 0, 256, 16)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -531.0
+offset_top = -373.0
+offset_right = -219.0
+offset_bottom = -317.0
+grow_vertical = 0
+scale = Vector2(3, 3)
+
+[node name="StartGameButton" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+focus_mode = 0
+texture_normal = SubResource("AtlasTexture_glbon")
+texture_pressed = SubResource("AtlasTexture_nlkkf")
+texture_hover = SubResource("AtlasTexture_nlkkf")
+
+[node name="AnimationComponent" type="Node" parent="VBoxContainer/StartGameButton"]
+script = ExtResource("1_06t4h")
+time = 0.2
+transition_type = 11
+hovered_position_offset = Vector2(50, 0)
+metadata/_custom_type_script = "uid://dknypiyjvb6ua"
+
+[node name="OptionsButton" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = SubResource("AtlasTexture_qe12f")
+texture_pressed = SubResource("AtlasTexture_8qtwp")
+texture_hover = SubResource("AtlasTexture_8qtwp")
+
+[node name="AnimationComponent" type="Node" parent="VBoxContainer/OptionsButton"]
+script = ExtResource("1_06t4h")
+time = 0.2
+transition_type = 11
+hovered_position_offset = Vector2(50, 0)
+metadata/_custom_type_script = "uid://dknypiyjvb6ua"
+
+[node name="Exit" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_dy7ct")
+texture_pressed = SubResource("AtlasTexture_0o4t1")
+texture_hover = SubResource("AtlasTexture_0o4t1")
+
+[node name="AnimationComponent" type="Node" parent="VBoxContainer/Exit"]
+script = ExtResource("1_06t4h")
+time = 0.2
+transition_type = 11
+hovered_position_offset = Vector2(50, 0)
+metadata/_custom_type_script = "uid://dknypiyjvb6ua"

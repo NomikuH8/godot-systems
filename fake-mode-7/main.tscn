@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://d4b0383jwc85"]
+
+[ext_resource type="Texture2D" uid="uid://bhqsil6250rww" path="res://circuit.png" id="1_ig7tw"]
+
+[node name="Main" type="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(16, 0, 0, 0, -6.99382e-07, -1, 0, 16, -4.37114e-08, 0, 0, 0)
+texture_filter = 0
+texture = ExtResource("1_ig7tw")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.03284, -6.91466)

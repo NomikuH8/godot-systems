@@ -1,31 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://d4b0383jwc85"]
+[gd_scene load_steps=6 format=3 uid="uid://d4b0383jwc85"]
 
 [ext_resource type="Texture2D" uid="uid://xvo5fwvy7a3c" path="res://circuit1.png" id="1_h2yge"]
-[ext_resource type="Script" uid="uid://bu4vksjqhirff" path="res://follower_camera_component.gd" id="2_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://b6g2xuivdeux8" path="res://player.png" id="3_lquwl"]
 [ext_resource type="Script" uid="uid://ox2d3yim8m84" path="res://controllable_vehicle_component.gd" id="4_1bvp3"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_h2yge"]
-size = Vector3(10, 10, 10)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7mycd"]
 size = Vector3(323, 1, 262)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1bvp3"]
-size = Vector3(0.750284, 2, 2.063)
+size = Vector3(0.743, 2, 2.063)
 
 [node name="Main" type="Node3D"]
-
-[node name="Wall" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -137.869, 5, 119.596)
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Wall"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/StaticBody3D"]
-shape = SubResource("BoxShape3D_h2yge")
-
-[node name="CSGBox3D" type="CSGBox3D" parent="Wall"]
-size = Vector3(10, 10, 10)
 
 [node name="Map" type="Node3D" parent="."]
 
@@ -43,12 +28,7 @@ shape = SubResource("BoxShape3D_7mycd")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -67.468, 0, 123)
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 0.927184, 0.374607, 0, -0.374607, 0.927184, 0, 5.10633, 6.20002)
-
-[node name="FollowerCameraComponent" type="Node" parent="Player/Camera3D" node_paths=PackedStringArray("to_follow")]
-script = ExtResource("2_1bvp3")
-to_follow = NodePath("../..")
-follow_offset = Vector3(0, 5.106, 3)
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 3, 6.2)
 
 [node name="Sprite3D" type="Sprite3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24973, 0)
@@ -58,7 +38,7 @@ texture_filter = 0
 texture = ExtResource("3_lquwl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0360107, 1.46288, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.46288, 0)
 shape = SubResource("BoxShape3D_1bvp3")
 
 [node name="ControllableVehicleComponent" type="Node" parent="Player"]

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://qx3sgbapwiur"]
+
+[ext_resource type="Script" uid="uid://nwejblq17inc" path="res://bump_jump_component.gd" id="1_ei015"]
+
+[node name="BumpJump" type="Area3D"]
+
+[node name="BumpJumpComponent" type="Node" parent="."]
+script = ExtResource("1_ei015")
+jump_force = 40.0

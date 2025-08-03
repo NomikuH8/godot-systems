@@ -1,17 +1,21 @@
+class_name ControllableVehicleComponent
 extends Node
 
-@export var max_speed := 50.0
+@export var max_speed := 40.0
 @export var acceleration_rate := 50.0
 @export var deceleration_rate := 40.0
 @export var turn_speed := 2.5
 @export var lift_speed := 10.0
 @export var friction := 1.0
-@export var jump_force := 30.0
+@export var jump_force := 25.0
 @export var strafe_speed := 10.5
 @export var wall_bounce_force := 25.0
 @export var wall_recovery_time := 0.8
 @export var control_damp_multiplier := 0.3
 @export var speed_damp_multiplier := 0.5
+@export var drift_threshold_speed := 20.0
+@export var drift_strength := 0.8
+@export var drift_decay := 30.0
 
 var current_speed := 0.0
 var velocity: Vector3 = Vector3.ZERO
@@ -22,45 +26,26 @@ var unstable_timer := 0.0
 var rebound_velocity: Vector3 = Vector3.ZERO
 var rebound_force := 0.0
 var rebound_damping := 1000.0
+var drift_velocity: Vector3 = Vector3.ZERO
 
 func _ready() -> void:
 	parent = get_parent()
 
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_pressed("accelerate") and not is_unstable:
+	if Input.is_action_pressed(&"accelerate") and not is_unstable:
 		current_speed = minf(current_speed + acceleration_rate * delta, max_speed)
 	else:
-		current_speed = maxf(current_speed - deceleration_rate * delta, 0)
+		current_speed = maxf(current_speed - deceleration_rate * delta, 0.0)
 	
 	if is_unstable:
-		current_speed = lerpf(current_speed, 0, deceleration_rate * delta)
+		current_speed = lerpf(current_speed, 0.0, deceleration_rate * delta)
 	
 	var forward := -parent.transform.basis.z
 	var side := parent.transform.basis.x
 	
-	var strafe_input := Input.get_axis("move_left", "move_right")
+	var strafe_input := Input.get_axis(&"move_left", &"move_right")
 	var strafe_velocity := side * (strafe_input * strafe_speed)
-	
-	if not is_unstable:
-		var horizontal_velocity := forward * current_speed + strafe_velocity
-		
-		if not parent.is_on_floor():
-			parent.velocity.y -= gravity * delta
-		else:
-			parent.velocity.y = 0.0
-		
-		if parent.is_on_floor() and Input.is_action_just_pressed("go_up"):
-			parent.velocity.y = jump_force
-		
-		parent.velocity.x = horizontal_velocity.x
-		parent.velocity.z = horizontal_velocity.z
-	elif is_unstable and rebound_force > 0:
-		var rebound := rebound_velocity * rebound_force * delta
-		parent.velocity.x = rebound.x
-		parent.velocity.z = rebound.z
-		
-		rebound_force = maxf(rebound_force - rebound_damping * delta, 0.0)
 	
 	var steer_input := 0.0
 	if Input.is_action_pressed(&"turn_left"):
@@ -70,6 +55,36 @@ func _physics_process(delta: float) -> void:
 	
 	if steer_input != 0:
 		parent.rotate_y(steer_input * turn_speed * delta)
+	
+	if not parent.is_on_floor():
+		parent.velocity.y -= gravity * delta
+	else:
+		parent.velocity.y = 0.0
+	
+	if not is_unstable:
+		# Drifting
+		if abs(steer_input) > 0.0 and current_speed > drift_threshold_speed and not is_unstable:
+			var drift_dir := side * steer_input
+			drift_velocity = drift_velocity.lerp(drift_dir * current_speed * drift_strength, delta * 3.0)
+		else:
+			drift_velocity = drift_velocity.lerp(Vector3.ZERO, drift_decay * delta)
+		
+		var horizontal_velocity := forward * current_speed + strafe_velocity + drift_velocity
+		
+		if parent.is_on_floor() and Input.is_action_just_pressed(&"go_up"):
+			parent.velocity.y = jump_force
+		
+		parent.velocity.x = horizontal_velocity.x
+		parent.velocity.z = horizontal_velocity.z
+	elif is_unstable and rebound_force > 0.0:
+		if Input.is_action_just_pressed("accelerate"):
+			_recover_from_wall_collision()
+		
+		var rebound := rebound_velocity * rebound_force * delta
+		parent.velocity.x = rebound.x
+		parent.velocity.z = rebound.z
+		
+		rebound_force = maxf(rebound_force - rebound_damping * delta, 0.0)
 	
 	if is_unstable:
 		unstable_timer -= delta

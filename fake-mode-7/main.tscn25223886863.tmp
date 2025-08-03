@@ -1,13 +1,11 @@
-[gd_scene load_steps=42 format=3 uid="uid://d4b0383jwc85"]
+[gd_scene load_steps=38 format=3 uid="uid://d4b0383jwc85"]
 
 [ext_resource type="Texture2D" uid="uid://xvo5fwvy7a3c" path="res://circuit1.png" id="1_h2yge"]
 [ext_resource type="Texture2D" uid="uid://bhqsil6250rww" path="res://circuit.png" id="1_lquwl"]
 [ext_resource type="Script" uid="uid://bu4vksjqhirff" path="res://follower_camera_component.gd" id="2_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://qx3sgbapwiur" path="res://bump_jump.tscn" id="3_5vw27"]
 [ext_resource type="Texture2D" uid="uid://b6g2xuivdeux8" path="res://player.png" id="3_lquwl"]
+[ext_resource type="Script" uid="uid://ox2d3yim8m84" path="res://controllable_vehicle_component.gd" id="4_1bvp3"]
 [ext_resource type="Script" uid="uid://dgw7dc5n30kn7" path="res://animation_component.gd" id="6_7mycd"]
-[ext_resource type="Script" uid="uid://2injwkhn3adx" path="res://controllable_component.gd" id="7_5vw27"]
-[ext_resource type="Script" uid="uid://deh1xfjybyt4p" path="res://vehicle_component.gd" id="8_kek77"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lquwl"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -31,11 +29,23 @@ albedo_texture = ExtResource("1_lquwl")
 [sub_resource type="BoxShape3D" id="BoxShape3D_7mycd"]
 size = Vector3(360.798, 1, 305.711)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_kek77"]
-size = Vector3(1, 1, 8)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_4c57u"]
-size = Vector3(1, 1, 16)
+[sub_resource type="Animation" id="Animation_lquwl"]
+resource_name = "go_forward"
+length = 0.2
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
 
 [sub_resource type="Animation" id="Animation_7mycd"]
 length = 0.001
@@ -58,59 +68,6 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = PackedFloat32Array(0, 1, 0, 1.24973, 0)
-
-[sub_resource type="Animation" id="Animation_5vw27"]
-resource_name = "diagonal"
-length = 0.1
-loop_mode = 1
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [3]
-}
-
-[sub_resource type="Animation" id="Animation_lquwl"]
-resource_name = "go_forward"
-length = 0.2
-loop_mode = 1
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 1]
-}
-
-[sub_resource type="Animation" id="Animation_kek77"]
-resource_name = "idle"
-length = 0.1
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
 
 [sub_resource type="Animation" id="Animation_272bh"]
 resource_name = "turn"
@@ -137,6 +94,41 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = PackedFloat32Array(0, 1, 0, 1.24973, 0, 0.1, 1, 0, 1.27, 0)
 
+[sub_resource type="Animation" id="Animation_5vw27"]
+resource_name = "diagonal"
+length = 0.1
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="Animation" id="Animation_kek77"]
+resource_name = "idle"
+length = 0.1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_272bh"]
 _data = {
 &"RESET": SubResource("Animation_7mycd"),
@@ -159,39 +151,63 @@ animation = &"idle"
 animation = &"turn"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4c57u"]
+break_loop_at_end = true
+advance_mode = 2
 advance_condition = &"turning"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_efxa6"]
+break_loop_at_end = true
+advance_mode = 2
 advance_condition = &"going_forward"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dg77c"]
+break_loop_at_end = true
+advance_mode = 2
 advance_condition = &"diagonal"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ycdy4"]
+break_loop_at_end = true
+advance_mode = 2
 advance_condition = &"idle"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_w48qg"]
+break_loop_at_end = true
+advance_mode = 2
 advance_condition = &"diagonal"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vivmo"]
+break_loop_at_end = true
+advance_mode = 2
 advance_condition = &"going_forward"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2cqfq"]
+break_loop_at_end = true
+advance_mode = 2
 advance_condition = &"turning"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yaehf"]
+break_loop_at_end = true
+advance_mode = 2
 advance_condition = &"idle"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_074og"]
+break_loop_at_end = true
+advance_mode = 2
 advance_condition = &"going_forward"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_cegan"]
+break_loop_at_end = true
+advance_mode = 2
 advance_condition = &"idle"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_82xsv"]
+break_loop_at_end = true
+advance_mode = 2
 advance_condition = &"diagonal"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_getpj"]
+break_loop_at_end = true
+advance_mode = 2
 advance_condition = &"turning"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7mycd"]
@@ -237,7 +253,6 @@ size = Vector3(10, 10, 10)
 
 [node name="Sprite3D" type="Sprite3D" parent="Map"]
 transform = Transform3D(8, 0, 0, 0, -3.49691e-07, 1, 0, -8, -4.37114e-08, 0, 0, 0)
-transparent = false
 texture_filter = 0
 texture = ExtResource("1_h2yge")
 
@@ -246,22 +261,6 @@ texture = ExtResource("1_h2yge")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0991211, 0, 0.184814)
 shape = SubResource("BoxShape3D_7mycd")
-
-[node name="BumpJump" parent="Map" instance=ExtResource("3_5vw27")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -139.916, 0.557305, -120.621)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/BumpJump"]
-shape = SubResource("BoxShape3D_kek77")
-
-[node name="BumpJump2" parent="Map" instance=ExtResource("3_5vw27")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81.7388, 0.499999, -22.61)
-
-[node name="BumpJumpComponent" parent="Map/BumpJump2" index="0"]
-jump_force = 35.0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/BumpJump2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.206281, 2)
-shape = SubResource("BoxShape3D_4c57u")
 
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -92.1331, 3.8147e-06, -123.153)
@@ -300,19 +299,11 @@ parameters/conditions/turning = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0360107, 1.46288, 0)
 shape = SubResource("BoxShape3D_1bvp3")
 
-[node name="AnimationComponent" type="Node" parent="Player" node_paths=PackedStringArray("vehicle_component", "sprite", "animation_tree")]
+[node name="ControllableVehicleComponent" type="Node" parent="Player"]
+script = ExtResource("4_1bvp3")
+
+[node name="AnimationComponent" type="Node" parent="Player" node_paths=PackedStringArray("controllable_vehicle_component", "sprite", "animation_tree")]
 script = ExtResource("6_7mycd")
-vehicle_component = NodePath("../VehicleComponent")
+controllable_vehicle_component = NodePath("../ControllableVehicleComponent")
 sprite = NodePath("../Sprite3D")
 animation_tree = NodePath("../Sprite3D/AnimationTree")
-
-[node name="ControllableComponent" type="Node" parent="Player"]
-script = ExtResource("7_5vw27")
-metadata/_custom_type_script = "uid://2injwkhn3adx"
-
-[node name="VehicleComponent" type="Node" parent="Player"]
-script = ExtResource("8_kek77")
-metadata/_custom_type_script = "uid://deh1xfjybyt4p"
-
-[editable path="Map/BumpJump"]
-[editable path="Map/BumpJump2"]

@@ -266,12 +266,14 @@ shape = SubResource("BoxShape3D_4c57u")
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -92.1331, 3.8147e-06, -123.153)
 
-[node name="Camera3D" type="Camera3D" parent="Player"]
+[node name="CameraPivot" type="Node3D" parent="Player"]
+
+[node name="Camera3D" type="Camera3D" parent="Player/CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.927184, 0.374607, 0, -0.374607, 0.927184, 0, 5.10633, 6.20002)
 
-[node name="FollowerCameraComponent" type="Node" parent="Player/Camera3D" node_paths=PackedStringArray("to_follow")]
+[node name="FollowerCameraComponent" type="Node" parent="Player/CameraPivot/Camera3D" node_paths=PackedStringArray("to_follow")]
 script = ExtResource("2_1bvp3")
-to_follow = NodePath("../..")
+to_follow = NodePath("../../..")
 follow_offset = Vector3(0, 5.106, 6.2)
 rotation_y_lerp_multiplier = 25.0
 

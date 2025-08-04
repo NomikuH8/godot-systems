@@ -7,10 +7,11 @@ extends Node
 @export var rotation_y_lerp_multiplier := 5.0
 
 var parent: Camera3D
+var pivot: Node3D
 
 func _ready() -> void:
 	parent = get_parent()
-	parent.top_level = true
+	pivot = parent.get_parent()
 
 
 func _process(delta: float) -> void:

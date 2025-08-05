@@ -1,0 +1,2 @@
+- Create particles for smoke (steering)
+- Fix animation when pressing A+D then releasing A

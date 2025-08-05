@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://d4b0383jwc85"]
+[gd_scene load_steps=44 format=3 uid="uid://d4b0383jwc85"]
 
 [ext_resource type="Texture2D" uid="uid://xvo5fwvy7a3c" path="res://circuit1.png" id="1_h2yge"]
 [ext_resource type="Texture2D" uid="uid://bhqsil6250rww" path="res://circuit.png" id="1_lquwl"]
@@ -212,6 +212,16 @@ transitions = ["idle", "turn", SubResource("AnimationNodeStateMachineTransition_
 [sub_resource type="BoxShape3D" id="BoxShape3D_1bvp3"]
 size = Vector3(0.750284, 2, 2.063)
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5vw27"]
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 3.0
+initial_velocity_max = 3.0
+collision_mode = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_5vw27"]
+size = Vector2(0.2, 0.2)
+
 [node name="Main" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -275,6 +285,7 @@ transform = Transform3D(1, 0, 0, 0, 0.927184, 0.374607, 0, -0.374607, 0.927184, 
 script = ExtResource("2_1bvp3")
 to_follow = NodePath("../../..")
 follow_offset = Vector3(0, 5.106, 6.2)
+position_y_lerp_multiplier = 4.0
 rotation_y_lerp_multiplier = 25.0
 
 [node name="Sprite3D" type="Sprite3D" parent="Player"]
@@ -302,14 +313,23 @@ parameters/conditions/turning = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0360107, 1.46288, 0)
 shape = SubResource("BoxShape3D_1bvp3")
 
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.140116, 0.661774)
+emitting = false
+lifetime = 0.7
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_5vw27")
+draw_pass_1 = SubResource("QuadMesh_5vw27")
+
 [node name="AnimationComponent" type="Node" parent="Player" node_paths=PackedStringArray("vehicle_component", "sprite", "animation_tree")]
 script = ExtResource("6_7mycd")
 vehicle_component = NodePath("../VehicleComponent")
 sprite = NodePath("../Sprite3D")
 animation_tree = NodePath("../Sprite3D/AnimationTree")
 
-[node name="ControllableComponent" type="Node" parent="Player"]
+[node name="ControllableComponent" type="Node" parent="Player" node_paths=PackedStringArray("steering_particles")]
 script = ExtResource("7_5vw27")
+steering_particles = NodePath("../GPUParticles3D")
 metadata/_custom_type_script = "uid://2injwkhn3adx"
 
 [node name="VehicleComponent" type="Node" parent="Player"]

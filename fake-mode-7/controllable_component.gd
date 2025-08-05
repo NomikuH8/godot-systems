@@ -1,17 +1,23 @@
 class_name ControllableComponent
 extends Node
 
+#@export var camera: Camera3D
+@export var steering_particles: GPUParticles3D
 @export var can_jump := false
 @export var control_damp_multiplier := 0.3
 @export var drift_threshold_speed := 20.0
 @export var drift_strength := 0.8
 @export var drift_decay := 30.0
 
+#const STEERING_ROTATION_MULTIPLIER := 5.0
+
 var vehicle: VehicleComponent
+#var follower_camera: FollowerCameraComponent
 var drift_velocity: Vector3 = Vector3.ZERO
 
 func _ready() -> void:
 	vehicle = get_parent().get_node_or_null("VehicleComponent")
+	#follower_camera = camera.get_node_or_null("FollowerCameraComponent")
 
 
 func _physics_process(delta: float) -> void:
@@ -34,12 +40,18 @@ func _physics_process(delta: float) -> void:
 	var strafe_velocity := side * (strafe_input * vehicle.strafe_speed)
 	
 	var steer_input := 0.0
-	if Input.is_action_pressed("turn_left"):
+	var turn_input_axis := Input.get_axis("turn_right", "turn_left")
+	if turn_input_axis >= 0.2:
 		steer_input += 1.0
-	if Input.is_action_pressed("turn_right"):
+	if turn_input_axis <= -0.2:
 		steer_input -= 1.0
 	
+	if steering_particles:
+		steering_particles.emitting = absf(steer_input) > 0.2 and vehicle.current_speed >= 30.0
+	
 	if steer_input != 0.0:
+		# Uncomment if you want the camera to rotate with steering
+		#follower_camera.rotation_y_offset = steer_input * _STEERING_ROTATION_MULTIPLIER
 		parent.rotate_y(steer_input * vehicle.turn_speed * delta)
 	
 	# Drifting

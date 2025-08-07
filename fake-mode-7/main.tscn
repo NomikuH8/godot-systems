@@ -1,11 +1,12 @@
-[gd_scene load_steps=44 format=3 uid="uid://d4b0383jwc85"]
+[gd_scene load_steps=46 format=3 uid="uid://d4b0383jwc85"]
 
 [ext_resource type="Texture2D" uid="uid://xvo5fwvy7a3c" path="res://circuit1.png" id="1_h2yge"]
 [ext_resource type="Texture2D" uid="uid://bhqsil6250rww" path="res://circuit.png" id="1_lquwl"]
 [ext_resource type="Script" uid="uid://bu4vksjqhirff" path="res://follower_camera_component.gd" id="2_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://qx3sgbapwiur" path="res://bump_jump.tscn" id="3_5vw27"]
 [ext_resource type="Texture2D" uid="uid://b6g2xuivdeux8" path="res://player.png" id="3_lquwl"]
-[ext_resource type="Script" uid="uid://dgw7dc5n30kn7" path="res://animation_component.gd" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://dgw7dc5n30kn7" path="res://controllable_animation_component.gd" id="6_7mycd"]
+[ext_resource type="Texture2D" uid="uid://bcqc3drv2qdl5" path="res://smoke.png" id="6_kek77"]
 [ext_resource type="Script" uid="uid://2injwkhn3adx" path="res://controllable_component.gd" id="7_5vw27"]
 [ext_resource type="Script" uid="uid://deh1xfjybyt4p" path="res://vehicle_component.gd" id="8_kek77"]
 
@@ -219,7 +220,20 @@ initial_velocity_min = 3.0
 initial_velocity_max = 3.0
 collision_mode = 2
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4c57u"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("6_kek77")
+texture_filter = 2
+texture_repeat = false
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
 [sub_resource type="QuadMesh" id="QuadMesh_5vw27"]
+material = SubResource("StandardMaterial3D_4c57u")
 size = Vector2(0.2, 0.2)
 
 [node name="Main" type="Node3D"]
@@ -310,19 +324,21 @@ parameters/conditions/idle = true
 parameters/conditions/turning = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0360107, 1.46288, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.463, 0)
 shape = SubResource("BoxShape3D_1bvp3")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.140116, 0.661774)
+gi_mode = 0
 emitting = false
 lifetime = 0.7
 transform_align = 3
 process_material = SubResource("ParticleProcessMaterial_5vw27")
 draw_pass_1 = SubResource("QuadMesh_5vw27")
 
-[node name="AnimationComponent" type="Node" parent="Player" node_paths=PackedStringArray("vehicle_component", "sprite", "animation_tree")]
+[node name="ControllableAnimationComponent" type="Node" parent="Player" node_paths=PackedStringArray("controllable_component", "vehicle_component", "sprite", "animation_tree")]
 script = ExtResource("6_7mycd")
+controllable_component = NodePath("../ControllableComponent")
 vehicle_component = NodePath("../VehicleComponent")
 sprite = NodePath("../Sprite3D")
 animation_tree = NodePath("../Sprite3D/AnimationTree")

@@ -1,7 +1,7 @@
-class_name AnimationComponent
+class_name ControllableAnimationComponent
 extends Node
 
-
+@export var controllable_component: ControllableComponent
 @export var vehicle_component: VehicleComponent
 @export var sprite: Sprite3D
 @export var animation_tree: AnimationTree
@@ -19,19 +19,19 @@ func _physics_process(_delta: float) -> void:
 	
 	var going_forward: bool = vehicle_component.current_speed > 30.0
 	animation_tree["parameters/conditions/going_forward"] = going_forward
-	
-	if Input.is_action_just_pressed(&"turn_left"):
-		animation_tree["parameters/conditions/turning"] = true
-		playback.travel("turn")
-		sprite.flip_h = true
-	
-	if Input.is_action_just_pressed(&"turn_right"):
-		animation_tree["parameters/conditions/turning"] = true
-		playback.travel("turn")
-		sprite.flip_h = false
-	
-	if Input.is_action_just_released(&"turn_left") or Input.is_action_just_released(&"turn_right"):
-		animation_tree["parameters/conditions/turning"] = false
+	if controllable_component:
+		if controllable_component.steer_input != 0.0:
+			if controllable_component.steer_input > 0.2:
+				animation_tree["parameters/conditions/turning"] = true
+				playback.travel("turn")
+				sprite.flip_h = true
+			
+			if controllable_component.steer_input < -0.2:
+				animation_tree["parameters/conditions/turning"] = true
+				playback.travel("turn")
+				sprite.flip_h = false
+		else:
+			animation_tree["parameters/conditions/turning"] = false
 		
 	if idle and not animation_tree["parameters/conditions/turning"]:
 		playback.travel("idle")

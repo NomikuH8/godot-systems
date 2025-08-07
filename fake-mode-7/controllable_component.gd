@@ -12,6 +12,7 @@ extends Node
 #const STEERING_ROTATION_MULTIPLIER := 5.0
 
 var vehicle: VehicleComponent
+var steer_input: float
 #var follower_camera: FollowerCameraComponent
 var drift_velocity: Vector3 = Vector3.ZERO
 
@@ -39,15 +40,19 @@ func _physics_process(delta: float) -> void:
 	var strafe_input := Input.get_axis("move_left", "move_right")
 	var strafe_velocity := side * (strafe_input * vehicle.strafe_speed)
 	
-	var steer_input := 0.0
+	steer_input = 0.0
 	var turn_input_axis := Input.get_axis("turn_right", "turn_left")
 	if turn_input_axis >= 0.2:
-		steer_input += 1.0
+		steer_input = 1.0
 	if turn_input_axis <= -0.2:
-		steer_input -= 1.0
+		steer_input = -1.0
 	
 	if steering_particles:
-		steering_particles.emitting = absf(steer_input) > 0.2 and vehicle.current_speed >= 30.0
+		steering_particles.emitting = (
+			absf(steer_input) > 0.2 and
+			vehicle.current_speed >= 30.0 and
+			parent.is_on_floor()
+		)
 	
 	if steer_input != 0.0:
 		# Uncomment if you want the camera to rotate with steering

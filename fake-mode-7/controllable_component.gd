@@ -1,24 +1,21 @@
 class_name ControllableComponent
 extends Node
 
-#@export var camera: Camera3D
+
+@export_category("Other Components")
+@export var vehicle: VehicleComponent
+#@export var follower_camera: FollowerCameraComponent
 @export var steering_particles: GPUParticles3D
 @export var can_jump := false
 @export var control_damp_multiplier := 0.3
 @export var drift_threshold_speed := 20.0
 @export var drift_strength := 0.8
-@export var drift_decay := 30.0
+@export var drift_decay := 6.0
 
 #const STEERING_ROTATION_MULTIPLIER := 5.0
 
-var vehicle: VehicleComponent
 var steer_input: float
-#var follower_camera: FollowerCameraComponent
 var drift_velocity: Vector3 = Vector3.ZERO
-
-func _ready() -> void:
-	vehicle = get_parent().get_node_or_null("VehicleComponent")
-	#follower_camera = camera.get_node_or_null("FollowerCameraComponent")
 
 
 func _physics_process(delta: float) -> void:
@@ -26,7 +23,6 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	var parent := vehicle.parent
-	var forward := -parent.transform.basis.z
 	var side := parent.transform.basis.x
 	
 	if Input.is_action_pressed("accelerate") and not vehicle.is_unstable:
@@ -34,8 +30,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		vehicle.current_speed = maxf(vehicle.current_speed - vehicle.deceleration_rate * delta, 0.0)
 	
-	if vehicle.is_unstable:
-		vehicle.current_speed = lerpf(vehicle.current_speed, 0.0, vehicle.deceleration_rate * delta)
+	#if vehicle.is_unstable:
+		#vehicle.current_speed = lerpf(vehicle.current_speed, 0.0, vehicle.deceleration_rate * delta)
 	
 	var strafe_input := Input.get_axis("move_left", "move_right")
 	var strafe_velocity := side * (strafe_input * vehicle.strafe_speed)
@@ -64,8 +60,12 @@ func _physics_process(delta: float) -> void:
 		var drift_dir := side * steer_input
 		drift_velocity = drift_velocity.lerp(drift_dir * vehicle.current_speed * drift_strength, delta * 3.0)
 	else:
-		drift_velocity = drift_velocity.lerp(Vector3.ZERO, drift_decay * delta)
+		var decay_rate := drift_decay
+		if vehicle.current_speed < drift_threshold_speed:
+			decay_rate *= 0.5
+		drift_velocity = drift_velocity.lerp(Vector3.ZERO, decay_rate * delta)
 	
+	var forward := -parent.transform.basis.z
 	var horizontal_velocity := forward * vehicle.current_speed + strafe_velocity + drift_velocity
 	var jump := Input.is_action_pressed("go_up") if can_jump else false
 	

@@ -15,6 +15,10 @@ run/main_scene="uid://d4b0383jwc85"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[global_group]
+
+vehicle="Vehicles in the game"
+
 [input]
 
 move_left={

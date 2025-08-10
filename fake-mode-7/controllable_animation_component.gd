@@ -1,6 +1,7 @@
 class_name ControllableAnimationComponent
 extends Node
 
+
 @export var controllable_component: ControllableComponent
 @export var vehicle_component: VehicleComponent
 @export var sprite: Sprite3D

@@ -1,6 +1,7 @@
 class_name VehicleComponent
 extends Node
 
+
 @export var max_speed := 40.0
 @export var acceleration_rate := 50.0
 @export var deceleration_rate := 40.0

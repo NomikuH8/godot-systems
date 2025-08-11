@@ -1,11 +1,11 @@
-[gd_scene load_steps=50 format=3 uid="uid://d4b0383jwc85"]
+[gd_scene load_steps=51 format=3 uid="uid://d4b0383jwc85"]
 
 [ext_resource type="Texture2D" uid="uid://xvo5fwvy7a3c" path="res://circuit1.png" id="1_h2yge"]
 [ext_resource type="Texture2D" uid="uid://bhqsil6250rww" path="res://circuit.png" id="1_lquwl"]
 [ext_resource type="Script" uid="uid://bu4vksjqhirff" path="res://follower_camera_component.gd" id="2_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://qx3sgbapwiur" path="res://bump_jump.tscn" id="3_5vw27"]
 [ext_resource type="Texture2D" uid="uid://b6g2xuivdeux8" path="res://player.png" id="3_lquwl"]
-[ext_resource type="Texture2D" uid="uid://bcqc3drv2qdl5" path="res://smoke.png" id="6_kek77"]
+[ext_resource type="Texture2D" uid="uid://dir5w1fn21xum" path="res://smoke.png" id="6_kek77"]
 [ext_resource type="Script" uid="uid://2injwkhn3adx" path="res://controllable_component.gd" id="7_5vw27"]
 [ext_resource type="Script" uid="uid://deh1xfjybyt4p" path="res://vehicle_component.gd" id="8_kek77"]
 [ext_resource type="Script" uid="uid://dgw7dc5n30kn7" path="res://controllable_animation_component.gd" id="9_kek77"]
@@ -23,6 +23,10 @@ background_mode = 2
 sky = SubResource("Sky_7mycd")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_4c57u"]
+vertices = PackedVector3Array(-179.8, 1, -124.671, -162.55, 1, -124.421, -162.3, 1, -126.171, -160.3, 1, -152.171, -179.8, 1, -152.171, -160.3, 1, -126.171, -153.55, 1, -126.171, -153.55, 1, -152.171, -162.3, 1, -114.921, -162.55, 1, -116.671, -179.8, 1, -116.421, -151.3, 1, -125.921, -47.0499, 1, -123.671, -45.7999, 1, -123.921, -45.7999, 1, -152.171, -47.0499, 1, -121.421, -151.3, 1, -115.171, 77.9501, 1, -49.4207, -44.7999, 1, -121.171, 80.2001, 1, 152.579, 80.2001, 1, 108.579, 77.9501, 1, 108.329, -179.8, 1, 152.579, -44.2999, 1, -123.671, 79.4501, 1, -152.171, 78.2001, 1, -49.9207, 79.7001, 1, -49.9207, -44.2999, 1, -121.421, 83.9501, 1, -49.9207, 84.2001, 1, -152.171, 85.4501, 1, -49.9207, 85.7001, 1, -48.1707, 179.95, 1, -48.4207, 179.95, 1, -152.171, -161.55, 10.5, -125.171, -161.55, 10.5, -115.921, -152.3, 10.5, -115.921, -152.3, 10.5, -125.171, -161.3, 1, -124.921, -161.3, 1, -116.171, -152.55, 1, -116.171, -152.55, 1, -124.921, -46.0499, 2, -122.921, -46.0499, 2, -122.171, -45.2999, 2, -122.171, -45.2999, 2, -122.921, 78.9501, 3, -48.9207, 78.9501, 3, 107.579, 84.7001, 3, 107.579, 84.7001, 3, -48.9207, 85.7001, 1, 108.329, 83.4501, 1, 108.579, 83.4501, 1, 152.579, 179.95, 1, 152.579)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 4), PackedInt32Array(2, 4, 3), PackedInt32Array(3, 5, 2), PackedInt32Array(3, 7, 5), PackedInt32Array(5, 7, 6), PackedInt32Array(10, 9, 8), PackedInt32Array(6, 7, 11), PackedInt32Array(11, 7, 12), PackedInt32Array(12, 7, 13), PackedInt32Array(13, 7, 14), PackedInt32Array(15, 18, 11), PackedInt32Array(11, 18, 16), PackedInt32Array(16, 18, 17), PackedInt32Array(20, 19, 21), PackedInt32Array(21, 19, 22), PackedInt32Array(16, 17, 8), PackedInt32Array(8, 17, 10), PackedInt32Array(10, 17, 21), PackedInt32Array(10, 21, 22), PackedInt32Array(11, 12, 15), PackedInt32Array(13, 14, 23), PackedInt32Array(23, 14, 24), PackedInt32Array(24, 26, 25), PackedInt32Array(25, 17, 24), PackedInt32Array(24, 17, 27), PackedInt32Array(27, 17, 18), PackedInt32Array(27, 23, 24), PackedInt32Array(26, 24, 28), PackedInt32Array(28, 24, 29), PackedInt32Array(31, 30, 32), PackedInt32Array(32, 30, 33), PackedInt32Array(33, 30, 29), PackedInt32Array(30, 28, 29), PackedInt32Array(37, 36, 34), PackedInt32Array(34, 36, 35), PackedInt32Array(41, 40, 38), PackedInt32Array(38, 40, 39), PackedInt32Array(9, 10, 1), PackedInt32Array(1, 10, 0), PackedInt32Array(45, 44, 42), PackedInt32Array(42, 44, 43), PackedInt32Array(49, 48, 46), PackedInt32Array(46, 48, 47), PackedInt32Array(51, 50, 52), PackedInt32Array(52, 50, 53), PackedInt32Array(31, 32, 50), PackedInt32Array(50, 32, 53), PackedInt32Array(20, 51, 19), PackedInt32Array(19, 51, 52)]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_h2yge"]
 size = Vector3(10, 10, 10)
@@ -259,49 +263,64 @@ environment = SubResource("Environment_272bh")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Wall" type="Node3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_4c57u")
+
+[node name="Wall" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -156.861, 5.07553, -120.499)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Wall"]
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall/StaticBody3D"]
 shape = SubResource("BoxShape3D_h2yge")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Wall"]
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/Wall"]
 material_override = SubResource("StandardMaterial3D_7mycd")
 size = Vector3(10, 10, 10)
 
-[node name="Map" type="Node3D" parent="."]
+[node name="Wall2" type="Node3D" parent="NavigationRegion3D"]
+transform = Transform3D(0.142635, 0, 0, 0, 0.154204, 0, 0, 0, 0.160106, -45.6577, 0.86652, -122.616)
 
-[node name="Sprite3D" type="Sprite3D" parent="Map"]
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall2/StaticBody3D"]
+shape = SubResource("BoxShape3D_h2yge")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/Wall2"]
+material_override = SubResource("StandardMaterial3D_7mycd")
+size = Vector3(10, 10, 10)
+
+[node name="Map" type="Node3D" parent="NavigationRegion3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="NavigationRegion3D/Map"]
 transform = Transform3D(8, 0, 0, 0, -3.49691e-07, 1, 0, -8, -4.37114e-08, 0, 0, 0)
 transparent = false
 texture_filter = 0
 texture = ExtResource("1_h2yge")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Map"]
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Map"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Map/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0991211, 0, 0.184814)
 shape = SubResource("BoxShape3D_7mycd")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Map/StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="NavigationRegion3D/Map/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 81.7664, 2, 29.3344)
 shape = SubResource("BoxShape3D_dg77c")
 
-[node name="BumpJump" parent="Map" instance=ExtResource("3_5vw27")]
+[node name="BumpJump" parent="NavigationRegion3D/Map" instance=ExtResource("3_5vw27")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -139.916, 0.557305, -120.621)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/BumpJump"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Map/BumpJump"]
 shape = SubResource("BoxShape3D_kek77")
 
-[node name="BumpJump2" parent="Map" instance=ExtResource("3_5vw27")]
+[node name="BumpJump2" parent="NavigationRegion3D/Map" instance=ExtResource("3_5vw27")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81.7388, 0.499999, -22.61)
 
-[node name="BumpJumpComponent" parent="Map/BumpJump2" index="0"]
+[node name="BumpJumpComponent" parent="NavigationRegion3D/Map/BumpJump2" index="0"]
 jump_force = 35.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/BumpJump2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Map/BumpJump2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.206281, 2)
 shape = SubResource("BoxShape3D_4c57u")
 
@@ -383,18 +402,24 @@ shape = SubResource("BoxShape3D_efxa6")
 
 [node name="VehicleComponent" type="Node" parent="Enemy"]
 script = ExtResource("8_kek77")
+max_speed = 35.0
 turn_speed = 10.0
 metadata/_custom_type_script = "uid://deh1xfjybyt4p"
 
-[node name="ArtificialIntelligenceComponent" type="Node3D" parent="Enemy" node_paths=PackedStringArray("vehicle", "track")]
+[node name="ArtificialIntelligenceComponent" type="Node3D" parent="Enemy" node_paths=PackedStringArray("vehicle", "track", "navigation_region")]
 script = ExtResource("10_4c57u")
 vehicle = NodePath("../VehicleComponent")
-track = NodePath("../../Path3D")
+track = NodePath("../../Track")
+navigation_region = NodePath("../../NavigationRegion3D")
 metadata/_custom_type_script = "uid://cm44ua8swpwj2"
 
-[node name="Path3D" type="Path3D" parent="."]
+[node name="Track" type="Path3D" parent="." groups=["track"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 curve = SubResource("Curve3D_dg77c")
 
-[editable path="Map/BumpJump"]
-[editable path="Map/BumpJump2"]
+[node name="PathFollow3D" type="PathFollow3D" parent="Track"]
+transform = Transform3D(-0.00394235, 1.01057e-09, -0.999978, 2.56336e-07, 1, -2.30923e-14, 0.999978, -2.56338e-07, -0.00394235, -92.2855, 0, -122.705)
+progress = 1328.23
+
+[editable path="NavigationRegion3D/Map/BumpJump"]
+[editable path="NavigationRegion3D/Map/BumpJump2"]
